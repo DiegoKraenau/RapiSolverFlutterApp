@@ -27,6 +27,7 @@ dependencies:
   curved_navigation_bar: ^0.3.2
   async_loader: ^0.1.2
   flutter_spinkit: "^4.1.2"
+  toast: ^0.1.5
 
 
   # The following adds the Cupertino Icons font to your application.

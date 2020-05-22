@@ -3,7 +3,9 @@ import 'package:async_loader/async_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:rapisolver_flutter/Animation/FadeAnimation.dart';
 import 'package:flutter/services.dart';
+import 'package:rapisolver_flutter/UI/splash.dart';
 import 'package:rapisolver_flutter/menu.dart';
+import 'package:toast/toast.dart';
 
 void main(){
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -17,6 +19,7 @@ void main(){
     initialRoute: "/",
     routes: {
       '/menu':(context)=> Menu(),
+      '/splash':(context)=> SplashPage(),
     },
   )
   );
@@ -26,14 +29,15 @@ void main(){
 
 class HomePage extends StatelessWidget {
   
-
+  /*
   final GlobalKey<AsyncLoaderState> _asyncLoaderState =
     new GlobalKey<AsyncLoaderState>();
+    */
 
   @override
   Widget build(BuildContext context) {
     
-
+    /*
      var _asyncLoader = new AsyncLoader(
       key: _asyncLoaderState,
       initState: () async => await getMessage(),
@@ -42,7 +46,14 @@ class HomePage extends StatelessWidget {
           new Text('No se pudo cargar'),
       renderSuccess: ({data}) => new Text(data),
      );
+    */
 
+    var correo;
+    var contra;
+    
+
+    final correoCon=new TextEditingController();
+    final contraCon=new TextEditingController();
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -86,6 +97,7 @@ class HomePage extends StatelessWidget {
                             ]
                           ),
                           child: TextField(
+                            controller: correoCon,
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: "Email",
@@ -108,6 +120,7 @@ class HomePage extends StatelessWidget {
                             ]
                           ),
                           child: TextField(
+                            controller: contraCon,
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: "Contraseña",
@@ -117,13 +130,17 @@ class HomePage extends StatelessWidget {
                         ),
                         ),
                         SizedBox(height: 30),
-                        Center(
-                          child: _asyncLoader,
-                        ),
                         InkWell(
-                          onTap: () => _asyncLoaderState.currentState
-                                        .reloadState()
-                                        .whenComplete(() => Navigator.pushNamed(context, "/menu")), 
+                          onTap: () => {
+                            Navigator.pushNamed(context, "/splash"),
+                            correo=correoCon.text,
+                            contra=contraCon.text,
+                            verificarCorreo(correo,contra,context),
+                            
+                            
+                            
+                            
+                          }, 
                           child:FadeAnimation(2.0,Container(
                           height: 50,
                           decoration: BoxDecoration(
@@ -158,8 +175,23 @@ class HomePage extends StatelessWidget {
   }
 }
 
+
+/*
 const TIMEOUT = const Duration(seconds: 5);
 
 getMessage() async {
   return new Future.delayed(TIMEOUT, () => '');
+}
+*/
+
+Future<void> verificarCorreo(String correo,String contra,BuildContext context)async {
+  await Future.delayed(Duration(seconds: 5));
+  if(correo=="diego" && contra=="diego"){
+    Navigator.pushNamed(context, "/menu");
+  }else{
+    Toast.show("Usuario incorrecto", context,duration: Toast.LENGTH_SHORT,gravity: Toast.BOTTOM);
+    Navigator.pushNamed(context, "/");
+    
+  }
+  
 }
