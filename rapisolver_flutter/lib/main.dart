@@ -1,4 +1,5 @@
 
+import 'package:async_loader/async_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:rapisolver_flutter/Animation/FadeAnimation.dart';
 import 'package:flutter/services.dart';
@@ -24,14 +25,30 @@ void main(){
 
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
+  
+
+  final GlobalKey<AsyncLoaderState> _asyncLoaderState =
+    new GlobalKey<AsyncLoaderState>();
 
   @override
   Widget build(BuildContext context) {
+    
+
+     var _asyncLoader = new AsyncLoader(
+      key: _asyncLoaderState,
+      initState: () async => await getMessage(),
+      renderLoad: () => new CircularProgressIndicator(),
+      renderError: ([error]) =>
+          new Text('No se pudo cargar'),
+      renderSuccess: ({data}) => new Text(data),
+     );
+
+
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
-      body: new Container(
+      body:
+       new Container(
         child: new Column(
           children: <Widget>[
             FadeAnimation(1.6,Container(
@@ -100,8 +117,13 @@ class HomePage extends StatelessWidget {
                         ),
                         ),
                         SizedBox(height: 30),
+                        Center(
+                          child: _asyncLoader,
+                        ),
                         InkWell(
-                          onTap: () => Navigator.pushNamed(context, "/menu"), 
+                          onTap: () => _asyncLoaderState.currentState
+                                        .reloadState()
+                                        .whenComplete(() => Navigator.pushNamed(context, "/menu")), 
                           child:FadeAnimation(2.0,Container(
                           height: 50,
                           decoration: BoxDecoration(
@@ -134,4 +156,10 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+const TIMEOUT = const Duration(seconds: 5);
+
+getMessage() async {
+  return new Future.delayed(TIMEOUT, () => '');
 }
