@@ -1,10 +1,9 @@
 
-import 'package:async_loader/async_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:rapisolver_flutter/Animation/FadeAnimation.dart';
 import 'package:flutter/services.dart';
-import 'package:rapisolver_flutter/UI/splash.dart';
-import 'package:rapisolver_flutter/menu.dart';
+import 'package:rapisolver_flutter/UI/Original/app.dart';
+import 'package:rapisolver_flutter/UI/Original/splash.dart';
 import 'package:toast/toast.dart';
 
 void main(){
@@ -18,7 +17,7 @@ void main(){
     home: HomePage(),
     initialRoute: "/",
     routes: {
-      '/menu':(context)=> Menu(),
+      '/menu':(context)=> App(),
       '/splash':(context)=> SplashPage(),
     },
   )
