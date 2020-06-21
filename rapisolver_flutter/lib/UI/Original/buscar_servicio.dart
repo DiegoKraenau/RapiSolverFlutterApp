@@ -5,8 +5,7 @@ import 'package:rapisolver_flutter/Modelos/Servicios/ServiceDetailsService.dart'
 import 'package:rapisolver_flutter/UI/Original/detalle_servicio.dart';
 
 class ListarServicios extends StatefulWidget {
-  ListarServicios({Key key}) : super(key: key);
-
+ 
   @override
   _ListarServiciosState createState() => _ListarServiciosState();
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rapisolver_flutter/Utiles/global.dart' as global;
 
 class DetalleServicio extends StatefulWidget {
   final int serviceDetailId;
@@ -28,7 +29,7 @@ class _DetalleServicioState extends State<DetalleServicio> {
          crossAxisAlignment: CrossAxisAlignment.center,
          children: <Widget>[
            Center(
-             child: Text(serviceDetailId.toString()),
+             child: Text(global.idUser.toString()),
            )
          ],
        ),

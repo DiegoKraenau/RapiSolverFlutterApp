@@ -2,16 +2,21 @@
 import 'package:flutter/material.dart';
 import 'package:rapisolver_flutter/Animation/FadeAnimation.dart';
 import 'package:flutter/services.dart';
+import 'package:rapisolver_flutter/Modelos/Servicios/UserService.dart';
+import 'package:rapisolver_flutter/Modelos/User.dart';
 import 'package:rapisolver_flutter/UI/Original/app.dart';
 import 'package:rapisolver_flutter/UI/Original/splash.dart';
-import 'package:toast/toast.dart';
+import 'package:toast/toast.dart' ;
+import 'package:rapisolver_flutter/Utiles/global.dart' as global;
+
+
 
 void main(){
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.light
   ));
-
+   var id=0;
   runApp(new MaterialApp(
     debugShowCheckedModeBanner: false,
     home: HomePage(),
@@ -22,6 +27,7 @@ void main(){
     },
   )
   );
+
 }
 
 
@@ -32,6 +38,7 @@ class HomePage extends StatelessWidget {
   final GlobalKey<AsyncLoaderState> _asyncLoaderState =
     new GlobalKey<AsyncLoaderState>();
     */
+  final idUser = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +98,7 @@ class HomePage extends StatelessWidget {
                               BoxShadow(
                                 color: Color.fromRGBO(244, 244, 244, .9),
                                 blurRadius: 20.0,
-                                offset: Offset(0,10)
+                                offset: Offset(0,10),
                               )
                             ]
                           ),
@@ -125,20 +132,18 @@ class HomePage extends StatelessWidget {
                               hintText: "Contraseña",
                               hintStyle: TextStyle(color: Colors.grey[400])
                             ),
+                            obscureText: true,
                           ),
                         ),
                         ),
                         SizedBox(height: 30),
                         InkWell(
                           onTap: () => {
-                            Navigator.pushNamed(context, "/splash"),
+                           // Navigator.pushNamed(context, "/splash"),
                             correo=correoCon.text,
                             contra=contraCon.text,
                             verificarCorreo(correo,contra,context),
-                            
-                            
-                            
-                            
+ 
                           }, 
                           child:FadeAnimation(2.0,Container(
                           height: 50,
@@ -184,13 +189,37 @@ getMessage() async {
 */
 
 Future<void> verificarCorreo(String correo,String contra,BuildContext context)async {
-  await Future.delayed(Duration(seconds: 5));
-  if(correo=="diego" && contra=="diego"){
-    Navigator.pushNamed(context, "/menu");
-  }else{
-    Toast.show("Usuario incorrecto", context,duration: Toast.LENGTH_SHORT,gravity: Toast.BOTTOM);
-    Navigator.pushNamed(context, "/");
-    
-  }
+  
+  Navigator.pushNamed(context, "/splash");
+  
+  List<User> listaUsuarios=List<User>();
+  User usuario=null;
+
+  UsuerService.getUsers()
+              .then((value) =>{
+                //Obtienes la lista
+                listaUsuarios=value,
+                //Recorres la lista
+                listaUsuarios.forEach((element) {
+                  if(element.userName==correo && element.userPassword==contra){
+                    usuario=element;
+                  }
+                }),
+                //Verificas
+                if(usuario!=null){
+                  global.idUser=usuario.usuarioId,
+                  //print(global.idUser),
+                  Navigator.pushNamed(context, "/menu")
+   
+                }else{
+                  Toast.show("Usuario incorrecto", context,duration: Toast.LENGTH_SHORT,gravity: Toast.BOTTOM),
+                  Navigator.pushNamed(context, "/")
+                }
+              }    
+              ).catchError(
+                ()=>print("No se puede conectar.")
+              );
+              
+
   
 }
