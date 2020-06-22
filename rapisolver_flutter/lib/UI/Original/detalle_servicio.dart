@@ -1,9 +1,11 @@
-import 'dart:ffi';
+
 
 import 'package:flutter/material.dart';
 import 'package:rapisolver_flutter/Animation/FadeAnimation.dart';
 import 'package:rapisolver_flutter/Modelos/ServiceDetail.dart';
 import 'package:rapisolver_flutter/Modelos/Servicios/ServiceDetailsService.dart';
+import 'package:rapisolver_flutter/UI/Original/agregar_recomendacion.dart';
+import 'package:rapisolver_flutter/UI/Original/perfil_supplier.dart';
 
 class DetalleServicio extends StatefulWidget {
   final int serviceDetailId;
@@ -159,10 +161,16 @@ class _DetalleServicioState extends State<DetalleServicio> {
           )),
           SizedBox(height: 20),
           FadeAnimation(2.8, Center(
-            child: Text("Ver más...",style: TextStyle(
+            child: InkWell(
+              onTap: (){
+                Navigator.push(context, 
+                MaterialPageRoute(builder: (context)=>PerfilSupplier(sd.usuarioId)));
+              },
+              child: Text("Ver más...",style: TextStyle(
               color: Colors.blue,
-              fontStyle: FontStyle.italic
+              fontStyle: FontStyle.italic,
             )),
+            )
           )),
           SizedBox(height: 40),
           FadeAnimation(3.0, Center(
@@ -184,7 +192,11 @@ class _DetalleServicioState extends State<DetalleServicio> {
                 RaisedButton(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   color: Color.fromRGBO(254, 209, 54, 1),
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.push(context, 
+                      MaterialPageRoute(builder:(context)=>AgregarRecomendacion(sd.usuarioId))
+                    );
+                  },
                   child: Row(
                     children: <Widget>[
                       Icon(Icons.check),

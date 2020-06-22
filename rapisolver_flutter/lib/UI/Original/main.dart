@@ -16,7 +16,7 @@ void main(){
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.light
   ));
-   var id=0;
+   
   runApp(new MaterialApp(
     debugShowCheckedModeBanner: false,
     home: HomePage(),

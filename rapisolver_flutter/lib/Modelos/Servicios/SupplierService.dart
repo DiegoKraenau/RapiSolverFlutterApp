@@ -11,4 +11,13 @@ class SupplierService {
       .toList();
      return suppliers;
   }
+
+  static Future<Supplier> getSupplierById(int userId) async{
+    final resp=await http.get('http://rapisolverprueba.herokuapp.com/api/suppliers/'+userId.toString());
+    Supplier supplier=(json.decode(resp.body) as List)
+                    .map((data) => Supplier.fromJson(data))
+                    .toList().first;
+    return supplier;
+
+  }
 }
