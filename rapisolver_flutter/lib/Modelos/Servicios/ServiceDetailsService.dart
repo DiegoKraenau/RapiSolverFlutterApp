@@ -13,4 +13,14 @@ class ServiceDetailsService {
      return servicesDetails;
    }
 
+   static Future<ServiceDetail> getServiceDetailById(int id) async{
+     final resp=await http.get('http://rapisolverprueba.herokuapp.com/api/servicedetails/'+id.toString());
+     ServiceDetail sd=(json.decode(resp.body) as List)
+                  .map((data) => ServiceDetail.fromJson(data))
+                  .toList().first;
+                  
+     return sd;
+
+   }
+
 }

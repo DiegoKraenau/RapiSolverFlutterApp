@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class MiPerfil extends StatefulWidget {
-  
-
   MiPerfil({Key key}) : super(key: key);
 
   @override
