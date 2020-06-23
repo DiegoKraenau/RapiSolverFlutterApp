@@ -208,6 +208,7 @@ Future<void> verificarCorreo(String correo,String contra,BuildContext context)as
                 //Verificas
                 if(usuario!=null){
                   global.idUser=usuario.usuarioId,
+                  global.rolUser= usuario.rolId,
                   //print(global.idUser),
                   Navigator.pushNamed(context, "/menu")
    
