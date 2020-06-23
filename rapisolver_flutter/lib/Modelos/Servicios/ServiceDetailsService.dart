@@ -23,4 +23,26 @@ class ServiceDetailsService {
 
    }
 
+  static Future<bool> addServicieDetail(int supplierId, String serviceName, String cost, String categoryName, String description) async {
+     final resp= await http.post('http://rapisolverprueba.herokuapp.com/api/servicedetails',
+       headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        "supplierId": supplierId,
+        "serviceName": serviceName,
+        "cost": cost,
+        "categoryName": categoryName,
+        "description":description
+      }));
+     
+     if(resp.statusCode==200){
+       return true;
+     }else{
+       return false;
+     }
+   }
+
+
+
 }
