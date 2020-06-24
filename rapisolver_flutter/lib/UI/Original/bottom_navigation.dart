@@ -1,12 +1,13 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
-enum TabItem { miPerfil, buscarServicios, buscarProveedor }
+enum TabItem { miPerfil, buscarServicios, buscarProveedor, misReservas }
 
 Map<TabItem, String> tabName = {
   TabItem.miPerfil: 'Mi Perfil',
   TabItem.buscarServicios: 'Servicios',
   TabItem.buscarProveedor: 'Proveedores',
+  TabItem.misReservas: 'Reservas'
 };
 
 
@@ -25,7 +26,8 @@ class BottomNavigation extends StatelessWidget {
          items:<Widget>[
            Icon(Icons.person,size: 20,color: Colors.black),
            Icon(Icons.search,size: 20,color: Colors.black),
-           Icon(Icons.people,size: 20,color: Colors.black)
+           Icon(Icons.people,size: 20,color: Colors.black),
+           Icon(Icons.assignment, size: 20, color: Colors.black)
          ],
         onTap: (index) => onSelectTab(
           TabItem.values[index],
