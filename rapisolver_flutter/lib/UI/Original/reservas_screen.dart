@@ -27,15 +27,25 @@ class ReservasScreen extends StatelessWidget {
 
     lista.forEach((element) {
       final cards = Card(
+        elevation: 14,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children:<Widget>[
-            Text("Servicio: ${element.servicioName}"),
-            Text("Proveedor: ${element.supplierName} ${element.supplierLastName}"),
-            Text("Fecha: ${element.fecha}")
+            ListTile(
+              title: Text("${element.servicioName}", style: TextStyle(fontWeight: FontWeight.bold),),
+              subtitle: Text("Proveedor: ${element.supplierName} ${element.supplierLastName}\nFecha: ${element.fecha}"),
+            ),
+            ButtonBar(
+              children: <Widget>[
+                FlatButton(
+                  child: Icon(Icons.delete),
+                  onPressed: () {/* ... */},
+                ),
+              ]
+            )
           ],
         ),
       );
-
       reservas.add(cards);
     });
 
