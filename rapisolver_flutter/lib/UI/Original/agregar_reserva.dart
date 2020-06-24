@@ -29,7 +29,7 @@ class _AgregarReservaState extends State<AgregarReserva>{
   Widget build(BuildContext context) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(userId.toString()),
+          title: Text("Reservar"),
           backgroundColor: Color.fromRGBO(254, 209, 54, 1),
         ),
         body: FutureBuilder(
