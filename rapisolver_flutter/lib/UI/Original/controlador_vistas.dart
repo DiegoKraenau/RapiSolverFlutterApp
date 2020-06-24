@@ -3,6 +3,7 @@ import 'package:rapisolver_flutter/UI/Original/agregar_servicio.dart';
 import 'package:rapisolver_flutter/UI/Original/buscar_proveedor.dart';
 import 'package:rapisolver_flutter/UI/Original/buscar_servicio.dart';
 import 'package:rapisolver_flutter/UI/Original/mi_perfil.dart';
+import 'package:rapisolver_flutter/UI/Original/reservas_screen.dart';
 import 'package:rapisolver_flutter/Utiles/global.dart' as global;
 
 
@@ -36,7 +37,7 @@ class ControladorVistas extends StatelessWidget {
   Widget _crearBody() {
 
     if(title=='Mi Perfil'){
-      return MiPerfil();
+      return ReservasScreen();
     }
     else if(title=='Servicios'){
       return ListarServicios();

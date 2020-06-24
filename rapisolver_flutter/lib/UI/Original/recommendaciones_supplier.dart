@@ -37,7 +37,7 @@ class _RecommendacionesSupplierState extends State<RecommendacionesSupplier> {
           return _ArmarRecomendaciones(listaRecomendaciones);
         }
       },
-    ),
+     ),
     );
   }
 }
