@@ -37,7 +37,7 @@ class Reservation {
     usuarioId: json["usuarioId"],
     supplierId: json["supplierId"],
     supplierName: json["supplierName"],
-    supplierLastName: json["Canaval Rodriguez"],
+    supplierLastName: json["supplierLastName"],
     fecha: json["fecha"],
     note: json["note"],
 
