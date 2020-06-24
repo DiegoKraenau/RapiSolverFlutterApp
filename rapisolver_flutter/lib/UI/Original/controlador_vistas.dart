@@ -37,10 +37,13 @@ class ControladorVistas extends StatelessWidget {
   Widget _crearBody() {
 
     if(title=='Mi Perfil'){
-      return ReservasScreen();
+      return MiPerfil();
     }
     else if(title=='Servicios'){
       return ListarServicios();
+    }
+    else if(title == 'Reservas') {
+      return ReservasScreen();
     }
     else{
       return BuscarProveedor();
