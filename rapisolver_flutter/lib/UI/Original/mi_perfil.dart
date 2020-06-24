@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rapisolver_flutter/Animation/FadeAnimation.dart';
 import 'package:rapisolver_flutter/Modelos/Servicios/UserService.dart';
 import 'package:rapisolver_flutter/Modelos/User.dart';
+import 'package:rapisolver_flutter/UI/Original/editar_perfil.dart';
 
 class MiPerfil extends StatefulWidget {
   
@@ -88,6 +89,50 @@ class __PerfilState extends State<_MiPerfil> {
           FadeAnimation(1.8, Center(
             child: Text(nombreCompleto,style: estilo),
           )),
+          SizedBox(height: 20),
+          FadeAnimation(2.0,Center(
+            child: Row(
+              children: <Widget>[
+                SizedBox(width: separador),
+                Text("Correo: "),
+                SizedBox(width: separador),
+                Text("diegokraenau@gmail.com",style: estilo)
+              ],
+            ),
+          )),
+          SizedBox(height: 20),
+          FadeAnimation(2.0,Center(
+            child: Row(
+              children: <Widget>[
+                SizedBox(width: separador),
+                Text("Celular: "),
+                SizedBox(width: separador),
+                Text("960319369",style: estilo)
+              ],
+            ),
+          )),
+          SizedBox(height: 20),
+          FadeAnimation(2.0,Center(
+            child: Row(
+              children: <Widget>[
+                SizedBox(width: separador),
+                Text("Distrito: "),
+                SizedBox(width: separador),
+                Text("Ate - Vitarte",style: estilo)
+              ],
+            ),
+          )),
+          SizedBox(height: 20),
+          FadeAnimation(2.0,Center(
+            child: Row(
+              children: <Widget>[
+                SizedBox(width: separador),
+                Text("Rol: "),
+                SizedBox(width: 75),
+                Text("Cliente",style: estilo)
+              ],
+            ),
+          )),
         
         SizedBox(height: 40),
           FadeAnimation(3.0, Center(
@@ -97,7 +142,12 @@ class __PerfilState extends State<_MiPerfil> {
                 RaisedButton(
                   color: Color.fromRGBO(254, 209, 54, 1),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  onPressed: (){},
+                  onPressed: (){
+                    print(1);
+                    Navigator.push(context, 
+                      MaterialPageRoute(builder:(context)=>EditarPerfil(1))
+                    );
+                  },
                   child: Row(
                     children: <Widget>[
                       Icon(Icons.create),
@@ -106,27 +156,10 @@ class __PerfilState extends State<_MiPerfil> {
                     ],
                   ),
                 ),
-                RaisedButton(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  color: Color.fromRGBO(254, 209, 54, 1),
-                  //onPressed: (){
-                   // Navigator.push(context, 
-                     // MaterialPageRoute(builder:(context)=>AgregarRecomendacion(sd.usuarioId))
-                   // );
-                  //},
-                  child: Row(
-                    children: <Widget>[
-                      Icon(Icons.assignment),
-                      SizedBox(width: 10),
-                      Text("Reservas")
-                    ],
-                  )
-                )
               ],
             ),
           ))
         ]
-       );
-       
+       );      
   }
 }

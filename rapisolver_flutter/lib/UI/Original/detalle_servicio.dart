@@ -5,6 +5,7 @@ import 'package:rapisolver_flutter/Animation/FadeAnimation.dart';
 import 'package:rapisolver_flutter/Modelos/ServiceDetail.dart';
 import 'package:rapisolver_flutter/Modelos/Servicios/ServiceDetailsService.dart';
 import 'package:rapisolver_flutter/UI/Original/agregar_recomendacion.dart';
+import 'package:rapisolver_flutter/UI/Original/agregar_reserva.dart';
 import 'package:rapisolver_flutter/UI/Original/perfil_supplier.dart';
 
 class DetalleServicio extends StatefulWidget {
@@ -180,7 +181,13 @@ class _DetalleServicioState extends State<DetalleServicio> {
                 RaisedButton(
                   color: Color.fromRGBO(254, 209, 54, 1),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  onPressed: (){},
+                  onPressed: (){
+                    print(sd.usuarioId);
+                    print("99");
+                    Navigator.push(context, 
+                      MaterialPageRoute(builder:(context)=>AgregarReserva(sd.usuarioId,sd.servicioId))
+                    );
+                  },
                   child: Row(
                     children: <Widget>[
                       Icon(Icons.contact_mail),
@@ -193,6 +200,7 @@ class _DetalleServicioState extends State<DetalleServicio> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   color: Color.fromRGBO(254, 209, 54, 1),
                   onPressed: (){
+                    print(sd.usuarioId);
                     Navigator.push(context, 
                       MaterialPageRoute(builder:(context)=>AgregarRecomendacion(sd.usuarioId))
                     );

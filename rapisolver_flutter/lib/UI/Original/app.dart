@@ -16,6 +16,7 @@ class AppState extends State<App> {
     TabItem.miPerfil: GlobalKey<NavigatorState>(),
     TabItem.buscarServicios: GlobalKey<NavigatorState>(),
     TabItem.buscarProveedor: GlobalKey<NavigatorState>(),
+    TabItem.misReservas: GlobalKey<NavigatorState>()
   };
 
   void _selectTab(TabItem tabItem) {
@@ -50,6 +51,7 @@ class AppState extends State<App> {
           _buildOffstageNavigator(TabItem.miPerfil),
           _buildOffstageNavigator(TabItem.buscarServicios),
           _buildOffstageNavigator(TabItem.buscarProveedor),
+          _buildOffstageNavigator(TabItem.misReservas)
         ]),
         bottomNavigationBar: BottomNavigation(
           currentTab: _currentTab,
