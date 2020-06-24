@@ -10,8 +10,11 @@ class Reservation {
   Reservation({
     this.reservationId,
     this.servicioId,
+    this.servicioName,
     this.usuarioId,
     this.supplierId,
+    this.supplierName,
+    this.supplierLastName,
     this.fecha,
     this.note,
   });
@@ -20,6 +23,9 @@ class Reservation {
   int servicioId;
   int usuarioId;
   int supplierId;
+  String servicioName;
+  String supplierName;
+  String supplierLastName;
   String fecha;
   String note;
 
@@ -27,8 +33,11 @@ class Reservation {
   factory Reservation.fromJson(Map<String, dynamic> json) => Reservation(
     reservationId: json["reservationId"],
     servicioId: json["servicioId"],
+    servicioName: json["servicioName"],
     usuarioId: json["usuarioId"],
     supplierId: json["supplierId"],
+    supplierName: json["supplierName"],
+    supplierLastName: json["Canaval Rodriguez"],
     fecha: json["fecha"],
     note: json["note"],
 

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:rapisolver_flutter/Modelos/Reservation.dart';
 
 
 class ReservationService {
@@ -26,9 +27,13 @@ class ReservationService {
       }
   }
 
-  
+  static Future<List<Reservation>> getReservetations(int userId) async {
+    final resp = await http.get("http://rapisolverprueba.herokuapp.com/api/reservations/user/"+userId.toString());
 
-
-
-
+    if(resp.statusCode == 200) {
+      return (json.decode(resp.body) as List).map((data) => Reservation.fromJson(data)).toList();
+    } else {
+      return [];
+    }
+  }
 }
