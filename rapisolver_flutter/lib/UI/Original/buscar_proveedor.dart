@@ -35,8 +35,6 @@ class _BuscarProveedorState extends State<BuscarProveedor> {
   }
 }
 
-
-
 class _Lista extends StatefulWidget {
 
   final List<Supplier> listaSuppliers;

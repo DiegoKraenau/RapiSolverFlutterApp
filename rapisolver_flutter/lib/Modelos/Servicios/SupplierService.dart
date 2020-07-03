@@ -18,6 +18,5 @@ class SupplierService {
                     .map((data) => Supplier.fromJson(data))
                     .toList().first;
     return supplier;
-
   }
 }
