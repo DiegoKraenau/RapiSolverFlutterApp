@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rapisolver_flutter/UI/Original/main.dart';
+import 'package:rapisolver_flutter/main.dart';
 
 
 
