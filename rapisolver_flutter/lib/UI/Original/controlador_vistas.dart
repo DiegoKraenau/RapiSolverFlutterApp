@@ -37,7 +37,7 @@ class ControladorVistas extends StatelessWidget {
   Widget _crearBody() {
 
     if(title=='Mi Perfil'){
-      return MiPerfil();
+      return MiPerfil(global.idUser);
     }
     else if(title=='Servicios'){
       return ListarServicios();

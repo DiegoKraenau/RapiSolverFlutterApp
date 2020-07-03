@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rapisolver_flutter/Animation/FadeAnimation.dart';
+import 'package:rapisolver_flutter/Modelos/Customer.dart';
+import 'package:rapisolver_flutter/Modelos/Servicios/CustomerService.dart';
 import 'package:rapisolver_flutter/Modelos/Servicios/UserService.dart';
 import 'package:rapisolver_flutter/Modelos/User.dart';
 import 'package:rapisolver_flutter/UI/Original/editar_perfil.dart';
@@ -16,9 +18,7 @@ class MiPerfil extends StatefulWidget {
 class _MiPerfilState extends State<MiPerfil> {
 
   int userId;
-  User user;
-  List<User> users = List();
-  List<User> filtro = List();
+  Customer customer;
   _MiPerfilState(this.userId);
 
    @override
@@ -26,15 +26,14 @@ class _MiPerfilState extends State<MiPerfil> {
     return Scaffold(
 
       body: FutureBuilder(
-        future: UsuerService.getUsers(),
-        builder: (BuildContext context,AsyncSnapshot<List<User>> snapshot){
+        future: CustomerService.getCustomerByUserId(userId),
+        builder: (BuildContext context,AsyncSnapshot<Customer> snapshot){
 
         if(snapshot.connectionState==ConnectionState.waiting){
           return Center(child: CircularProgressIndicator());
         }else{
-          users = snapshot.data;
-          filtro = users;
-          return _MiPerfil(users);
+          customer = snapshot.data;
+          return _MiPerfil(customer);
         }
           
         },
@@ -46,26 +45,23 @@ class _MiPerfilState extends State<MiPerfil> {
 
 class _MiPerfil extends StatefulWidget {
 
-  final List<User> users;
+  final customer;
  
- _MiPerfil(this.users);
+ _MiPerfil(this.customer);
 
   @override
-  __PerfilState createState() => __PerfilState(users);
+  __PerfilState createState() => __PerfilState(customer);
 }
 
 class __PerfilState extends State<_MiPerfil> {
 
-  User user;
-  String nombreCompleto = "";
   double separador=50;
-  List<User> users = List();
-  List<User> filtro = List();
+  Customer customer;
 
   var estilo=TextStyle(fontWeight: FontWeight.bold);
 
-  __PerfilState(this.users){
-    this.nombreCompleto = "Diego Kraenau";
+  __PerfilState(this.customer){
+    //this.nombreCompleto = "Diego Kraenau";
   }
 
   @override
@@ -87,7 +83,7 @@ class __PerfilState extends State<_MiPerfil> {
           )),
           SizedBox(height: 20),
           FadeAnimation(1.8, Center(
-            child: Text(nombreCompleto,style: estilo),
+            child: Text("${customer.name} ${customer.lastName}",style: estilo),
           )),
           SizedBox(height: 20),
           FadeAnimation(2.0,Center(
@@ -96,7 +92,7 @@ class __PerfilState extends State<_MiPerfil> {
                 SizedBox(width: separador),
                 Text("Correo: "),
                 SizedBox(width: separador),
-                Text("diegokraenau@gmail.com",style: estilo)
+                Text("${customer.email}",style: estilo)
               ],
             ),
           )),
@@ -107,7 +103,7 @@ class __PerfilState extends State<_MiPerfil> {
                 SizedBox(width: separador),
                 Text("Celular: "),
                 SizedBox(width: separador),
-                Text("960319369",style: estilo)
+                Text("${customer.phone}",style: estilo)
               ],
             ),
           )),
@@ -116,20 +112,9 @@ class __PerfilState extends State<_MiPerfil> {
             child: Row(
               children: <Widget>[
                 SizedBox(width: separador),
-                Text("Distrito: "),
+                Text("Pais: "),
                 SizedBox(width: separador),
-                Text("Ate - Vitarte",style: estilo)
-              ],
-            ),
-          )),
-          SizedBox(height: 20),
-          FadeAnimation(2.0,Center(
-            child: Row(
-              children: <Widget>[
-                SizedBox(width: separador),
-                Text("Rol: "),
-                SizedBox(width: 75),
-                Text("Cliente",style: estilo)
+                Text("${customer.country}",style: estilo)
               ],
             ),
           )),
