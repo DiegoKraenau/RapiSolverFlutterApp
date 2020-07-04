@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:rapisolver_flutter/Animation/FadeAnimation.dart';
-import 'package:rapisolver_flutter/Modelos/Customer.dart';
-import 'package:rapisolver_flutter/Modelos/Servicios/CustomerService.dart';
 import 'package:rapisolver_flutter/Modelos/Servicios/UserService.dart';
 import 'package:rapisolver_flutter/Modelos/User.dart';
-import 'package:rapisolver_flutter/UI/Original/editar_perfil.dart';
+
+import '../../Animation/FadeAnimation.dart';
+import '../../Modelos/Servicios/CustomerService.dart';
+import '../../Modelos/Servicios/SupplierService.dart';
+import 'package:rapisolver_flutter/Modelos/Supplier.dart';
+import 'package:rapisolver_flutter/Modelos/Customer.dart';
+import 'editar_perfil.dart';
 
 class MiPerfil extends StatefulWidget {
-  
   final int userId;
 
   MiPerfil(this.userId);
@@ -16,122 +18,177 @@ class MiPerfil extends StatefulWidget {
 }
 
 class _MiPerfilState extends State<MiPerfil> {
-
   int userId;
-  Customer customer;
+  User usuario;
   _MiPerfilState(this.userId);
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: FutureBuilder(
-        future: CustomerService.getCustomerByUserId(userId),
-        builder: (BuildContext context,AsyncSnapshot<Customer> snapshot){
-
-        if(snapshot.connectionState==ConnectionState.waiting){
-          return Center(child: CircularProgressIndicator());
-        }else{
-          customer = snapshot.data;
-          return _MiPerfil(customer);
-        }
-          
+        future: UsuerService.getUserById(userId),
+        builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            usuario = snapshot.data;
+            return _MiPerfil(usuario);
+          }
         },
       ),
     );
   }
 }
 
-
 class _MiPerfil extends StatefulWidget {
+  final usuario;
 
-  final customer;
- 
- _MiPerfil(this.customer);
+  _MiPerfil(this.usuario);
 
   @override
-  __PerfilState createState() => __PerfilState(customer);
+  __MiPerfilState createState() => __MiPerfilState(usuario);
 }
 
-class __PerfilState extends State<_MiPerfil> {
+class __MiPerfilState extends State<_MiPerfil> {
+  User usuario;
 
-  double separador=50;
-  Customer customer;
-
-  var estilo=TextStyle(fontWeight: FontWeight.bold);
-
-  __PerfilState(this.customer){
-    //this.nombreCompleto = "Diego Kraenau";
-  }
+  __MiPerfilState(this.usuario);
 
   @override
   Widget build(BuildContext context) {
-       return Column(
-        children: <Widget>[
-          SizedBox(height: 20),
-          FadeAnimation(1.6, Center(
+    if (usuario.rolId == 2) {
+      return FutureBuilder(
+        future: SupplierService.getSupplierById(usuario.usuarioId),
+        builder: (context, AsyncSnapshot<Supplier> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return _cargarDatos(
+                "${snapshot.data.name} ${snapshot.data.lastName}",
+                "${snapshot.data.email}",
+                "${snapshot.data.phone}",
+                "${snapshot.data.country}",
+                "Proveedor");
+          }
+        },
+      );
+    } else {
+      return FutureBuilder(
+        future: CustomerService.getCustomerByUserId(usuario.usuarioId),
+        builder: (context, AsyncSnapshot<Customer> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return _cargarDatos(
+                "${snapshot.data.name} ${snapshot.data.lastName}",
+                "${snapshot.data.email}",
+                "${snapshot.data.phone}",
+                "${snapshot.data.country}",
+                "Cliente");
+          }
+        },
+      );
+    }
+  }
+
+  Widget _cargarDatos(String nombreCompleto, String email, String phone,
+      String country, String rol) {
+    final separador = 50.0;
+    final estilo = TextStyle(fontWeight: FontWeight.bold);
+    return Column(children: <Widget>[
+      SizedBox(height: 20),
+      FadeAnimation(
+          1.6,
+          Center(
             child: Container(
               width: 200,
               height: 200,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/user.png'),
-                  fit:BoxFit.fill,
-                )
-              ),
+                  image: DecorationImage(
+                image: AssetImage('assets/images/user.png'),
+                fit: BoxFit.fill,
+              )),
             ),
           )),
-          SizedBox(height: 20),
-          FadeAnimation(1.8, Center(
-            child: Text("${customer.name} ${customer.lastName}",style: estilo),
+      SizedBox(height: 20),
+      FadeAnimation(
+          1.8,
+          Center(
+            child: Text(nombreCompleto, style: estilo),
           )),
-          SizedBox(height: 20),
-          FadeAnimation(2.0,Center(
+      SizedBox(height: 20),
+      FadeAnimation(
+          2.0,
+          Center(
             child: Row(
               children: <Widget>[
                 SizedBox(width: separador),
                 Text("Correo: "),
                 SizedBox(width: separador),
-                Text("${customer.email}",style: estilo)
+                Text(email, style: estilo)
               ],
             ),
           )),
-          SizedBox(height: 20),
-          FadeAnimation(2.0,Center(
+      SizedBox(height: 20),
+      FadeAnimation(
+          2.0,
+          Center(
             child: Row(
               children: <Widget>[
                 SizedBox(width: separador),
                 Text("Celular: "),
                 SizedBox(width: separador),
-                Text("${customer.phone}",style: estilo)
+                Text(phone, style: estilo)
               ],
             ),
           )),
-          SizedBox(height: 20),
-          FadeAnimation(2.0,Center(
+      SizedBox(height: 20),
+      FadeAnimation(
+          2.0,
+          Center(
             child: Row(
               children: <Widget>[
                 SizedBox(width: separador),
                 Text("Pais: "),
                 SizedBox(width: separador),
-                Text("${customer.country}",style: estilo)
+                Text(country, style: estilo)
               ],
             ),
           )),
-        
-        SizedBox(height: 40),
-          FadeAnimation(3.0, Center(
+      SizedBox(height: 20),
+      FadeAnimation(
+          2.0,
+          Center(
+            child: Row(
+              children: <Widget>[
+                SizedBox(width: separador),
+                Text("Rol: "),
+                SizedBox(width: separador),
+                Text(rol, style: estilo)
+              ],
+            ),
+          )),
+      SizedBox(height: 40),
+      FadeAnimation(
+          3.0,
+          Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 RaisedButton(
                   color: Color.fromRGBO(254, 209, 54, 1),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  onPressed: (){
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  onPressed: () {
                     print(1);
-                    Navigator.push(context, 
-                      MaterialPageRoute(builder:(context)=>EditarPerfil(1))
-                    );
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditarPerfil(1)));
                   },
                   child: Row(
                     children: <Widget>[
@@ -144,7 +201,6 @@ class __PerfilState extends State<_MiPerfil> {
               ],
             ),
           ))
-        ]
-       );      
+    ]);
   }
 }
