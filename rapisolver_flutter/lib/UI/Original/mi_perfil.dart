@@ -23,6 +23,7 @@ class _MiPerfilState extends State<MiPerfil> {
 
    @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
 
       body: FutureBuilder(
@@ -114,7 +115,7 @@ class __PerfilState extends State<_MiPerfil> {
                 SizedBox(width: separador),
                 Text("Pais: "),
                 SizedBox(width: separador),
-                Text("${customer.country}",style: estilo)
+                Text("    ${customer.country}",style: estilo)
               ],
             ),
           )),

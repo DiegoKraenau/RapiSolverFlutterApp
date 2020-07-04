@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rapisolver_flutter/Animation/FadeAnimation.dart';
+import 'package:rapisolver_flutter/Modelos/Customer.dart';
+import 'package:rapisolver_flutter/Modelos/Servicios/CustomerService.dart';
 import 'package:rapisolver_flutter/Modelos/Servicios/SupplierService.dart';
 import 'package:rapisolver_flutter/Modelos/Servicios/UserService.dart';
 import 'package:rapisolver_flutter/Modelos/Supplier.dart';
@@ -18,10 +20,8 @@ class EditarPerfil extends StatefulWidget {
 
 class _EditarPerfilState extends State<EditarPerfil> {
 
+  Customer customer;
   int userId;
-  User user;
-  List<User> users = List();
-  List<User> filtro = List();
   _EditarPerfilState(this.userId);
 
   @override
@@ -33,15 +33,14 @@ class _EditarPerfilState extends State<EditarPerfil> {
        ),
        body: Container(
           child: FutureBuilder(
-          future: UsuerService.getUsers(),
-          builder: (BuildContext context,AsyncSnapshot<List<User>> snapshot){
+          future: CustomerService.getCustomerByUserId(userId),
+          builder: (BuildContext context,AsyncSnapshot<Customer> snapshot){
 
           if(snapshot.connectionState==ConnectionState.waiting){
             return Center(child: CircularProgressIndicator());
           }else{
-            users = snapshot.data;
-            filtro = users;
-            return _EditarPerfil(users);
+            customer = snapshot.data;
+            return _EditarPerfil(customer);
           }
          }
         ),
@@ -51,26 +50,23 @@ class _EditarPerfilState extends State<EditarPerfil> {
 }
 class _EditarPerfil extends StatefulWidget{
   
-  final List<User> users;
-
-  _EditarPerfil(this.users);
+  final Customer customer;
+  _EditarPerfil(this.customer);
 
 @override 
-_EditarState createState() => _EditarState(users);
+_EditarState createState() => _EditarState(customer);
 
 }
 
 class _EditarState extends State<_EditarPerfil>{
-User user;
-  String nombreCompleto = "";
+  Customer customer;
   double separador=50;
-  List<User> users = List();
-  List<User> filtro = List();
+ 
 
   var estilo=TextStyle(fontWeight: FontWeight.bold);
     
-    _EditarState(this.users){
-      this.nombreCompleto= "";
+    _EditarState(this.customer){
+      
     }
 
 @override
@@ -90,91 +86,91 @@ User user;
               ),
             ),
           )),
-          Padding(
-              padding:  EdgeInsets.all(5.0),
-              child: new Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: new Column(
-                      children: <Widget>[
-                        FadeAnimation(1.6,Container(
-                          padding: EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                            border: Border(bottom: BorderSide(color: Colors.grey[400])),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color.fromRGBO(244, 244, 244, .9),
-                                blurRadius: 20.0,
-                                offset: Offset(0,10),
-                              )
-                            ]
-                          ),
-                          
-                          child: TextField(
-                          //  controller: correoCon,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Nombre:",
-                              hintStyle: TextStyle(color: Colors.black)
-                            ),
-                          ),
-                        ),
-                        ),
-                        SizedBox(height: 20),
-                        FadeAnimation(1.8,Container(
-                          padding: EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                            border: Border(bottom: BorderSide(color: Colors.grey[400])),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color.fromRGBO(244, 244, 244, .9),
-                                blurRadius: 20.0,
-                                offset: Offset(0,10)
-                              )
-                            ]
-                          ),
-                          child: TextField(
-                          //  controller: contraCon,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Correo",
-                              hintStyle: TextStyle(color: Colors.black)
-                            ),
-                            obscureText: true,
-                          ),
-                        ),
-                        ),
-                         SizedBox(height: 20),
-                        FadeAnimation(1.8,Container(
-                          padding: EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                            border: Border(bottom: BorderSide(color: Colors.grey[400])),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color.fromRGBO(244, 244, 244, .9),
-                                blurRadius: 20.0,
-                                offset: Offset(0,10)
-                              )
-                            ]
-                          ),
-                          child: TextField(
-                          //  controller: contraCon,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Telefono",
-                              hintStyle: TextStyle(color: Colors.black)
-                            ),
-                            obscureText: true,
-                          ),
-                        ),
-                        ),
-            
-          
+          SizedBox(height: 30),
+          FadeAnimation(2.2,Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text("Nombre: "),
+              Container(
+              width: 200,
+              child: TextField(
+                  
+                  decoration: InputDecoration(     
+                    hintText: customer.name,
+                ),
+              ),
+            )
+          ],
+        )),
+
+        SizedBox(height: 30),
+          FadeAnimation(2.2,Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text("Apellido: "),
+              Container(
+              width: 200,
+              child: TextField(
+                  onChanged: (text){
+                  print("${customer.lastName}");
+                  },
+                  decoration: InputDecoration(     
+                ),
+              ),
+            )
+          ],
+        )),
+
+        SizedBox(height: 30),
+        FadeAnimation(2.2,Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text("Correo: "),
+            Container(
+              width: 200,
+              child: TextField(
+             // controller: global.noteController,
+                decoration: InputDecoration(
+                  hintText: customer.email,
+                ),
+              ),
+            )
+          ],
+        )),
+
+          SizedBox(height: 30),
+          FadeAnimation(2.2,Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+              Text("Celular: "),
+            Container(
+              width: 200,
+              child: TextField(
+              //controller: global.noteController,
+                decoration: InputDecoration(  
+                  hintText: customer.phone,
+                ),
+              ),
+            )
+          ],
+        )),
+          SizedBox(height: 30),
+          FadeAnimation(2.2,Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+            Text("País: "),
+            Container(
+              width: 200,
+              child: TextField(
+            //    controller: global.noteController,
+                decoration: InputDecoration(
+                  hintText: customer.country,
+                ),
+              ),
+            )
+          ],
+        )),
+        
         SizedBox(height: 40),
           FadeAnimation(3.0, Center(
             child: Row(
@@ -195,13 +191,11 @@ User user;
               ],
             ),
           ))
+
         ],
-      ),
-       ), //Container 
-    ],
-              )
-          )
-        ]
-       );       
+      );        
   }
 }
+
+
+
