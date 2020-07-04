@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:rapisolver_flutter/UI/Original/bottom_navigation.dart';
 import 'package:rapisolver_flutter/UI/Original/tab_navigator.dart';
 
-
 class App extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => AppState();
@@ -10,7 +9,6 @@ class App extends StatefulWidget {
 
 class AppState extends State<App> {
   TabItem _currentTab = TabItem.miPerfil;
-  
 
   Map<TabItem, GlobalKey<NavigatorState>> _navigatorKeys = {
     TabItem.miPerfil: GlobalKey<NavigatorState>(),
@@ -47,6 +45,7 @@ class AppState extends State<App> {
         return isFirstRouteInCurrentTab;
       },
       child: Scaffold(
+        resizeToAvoidBottomPadding: false,
         body: Stack(children: <Widget>[
           _buildOffstageNavigator(TabItem.miPerfil),
           _buildOffstageNavigator(TabItem.buscarServicios),
