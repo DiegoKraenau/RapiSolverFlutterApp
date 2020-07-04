@@ -3,12 +3,16 @@ import 'package:rapisolver_flutter/Modelos/Reservation.dart';
 import 'package:rapisolver_flutter/Modelos/Servicios/ReservationService.dart';
 import 'package:rapisolver_flutter/Utiles/global.dart' as global;
 
+import '../../Modelos/Reservation.dart';
+import '../../Modelos/Servicios/ReservationService.dart';
+
 class ReservasScreen extends StatefulWidget {
   @override
   _ReservasScreenState createState() => _ReservasScreenState();
 }
 
 class _ReservasScreenState extends State<ReservasScreen> {
+  List<Reservation> reservas;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -28,7 +32,6 @@ class _ReservasScreenState extends State<ReservasScreen> {
 
   List<Widget> _cargarReservas(List<Reservation> lista) {
     final List<Widget> reservas = [];
-
     lista.forEach((element) {
       final cards = Card(
         elevation: 14,
@@ -46,7 +49,11 @@ class _ReservasScreenState extends State<ReservasScreen> {
             ButtonBar(children: <Widget>[
               FlatButton(
                 child: Icon(Icons.delete),
-                onPressed: () {/* ... */},
+                onPressed: () {
+                  setState(() {
+                    ReservationService.delete(element.reservationId);
+                  });
+                },
               ),
             ])
           ],
