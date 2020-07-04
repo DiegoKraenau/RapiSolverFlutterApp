@@ -152,7 +152,7 @@ class __MiPerfilState extends State<_MiPerfil> {
           Center(
             child: Row(
               children: <Widget>[
-                SizedBox(width: separador),
+                SizedBox(width: separador + 20),
                 Text("Pais: "),
                 SizedBox(width: separador),
                 Text(country, style: estilo)
@@ -165,7 +165,7 @@ class __MiPerfilState extends State<_MiPerfil> {
           Center(
             child: Row(
               children: <Widget>[
-                SizedBox(width: separador),
+                SizedBox(width: separador + 30),
                 Text("Rol: "),
                 SizedBox(width: separador),
                 Text(rol, style: estilo)
